@@ -2,26 +2,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.StringTokenizer;
 
 public class Coba {
-
-//    public static String getTimeNDate() {
-//
-//        Date date = new Date();
-//        String strDateFormat = "HH:mm:ss a";
-//        SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
-//        Format f = new SimpleDateFormat("EEEE");
-//        String str = f.format(new Date());
-//
-//        return str + " " + sdf.format(date) ;
-//
-//    }
 
     public static int checkLastDataIsNull(String[] datas) {
 
@@ -160,14 +145,17 @@ public class Coba {
 
     }
 
-    public static void showDescr(String[] datas) throws Exception {
+    public static void showDescr(String[] datas) {
 
-        BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.print("\nPilih nomor berapa yang ingin lihat deskripsinya : "); int choise = Integer.parseInt(scan.readLine());
-
-        StringTokenizer stringToken = new StringTokenizer(datas[choise-1], "|"); stringToken.nextToken(); stringToken.nextToken(); stringToken.nextToken();
-        System.out.println("=> " + stringToken.nextToken());
+        for (int i = 0; i < datas.length; i++) {
+            if (datas[i] != null) {
+                StringTokenizer stringToken = new StringTokenizer(datas[i], "|");
+                System.out.print((i + 1) + ".\t" + stringToken.nextToken());
+                stringToken.nextToken();
+                stringToken.nextToken();
+                System.out.println("=> " + stringToken.nextToken());
+            }
+        }
 
     }
 
@@ -216,7 +204,7 @@ public class Coba {
             }
             Arrays.sort(datas, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
 
-            System.out.println("1. Tampilkan list");
+            System.out.println("\n1. Tampilkan list");
             System.out.println("2. Menambah list");
             System.out.println("3. Update list");
             System.out.println("4. Hapus list");
@@ -255,7 +243,7 @@ public class Coba {
                     break;
 
                 case 5:
-                    show(datas);
+                    System.out.println("\nDeskripsi : ");
                     showDescr(datas);
 
                     break;
