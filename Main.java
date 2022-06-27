@@ -1,3 +1,5 @@
+package main;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -6,7 +8,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 
-public class Coba {
+public class Main {
 
     public static int checkLastDataIsNull(String[] datas) {
 
@@ -44,15 +46,15 @@ public class Coba {
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.print("\nBerapa list yang ingin anda masukkan ? "); int j = Integer.parseInt(scan.readLine());
-        System.out.println("Masukkan list : ");
+        System.out.println("Masukkan judul list : ");
         show(datas);
         int check = checkLastDataIsNull(datas);
         for (int i=check; i < (j+check); i++) {
             System.out.print((i+1) + ".\t");
             String list = scan.readLine();
-            System.out.print("Masukkan deskripsi : "); String descr = scan.readLine();
-            System.out.print("Masukkan jam : "); String time = scan.readLine();
-            System.out.print("Masukkan hari : "); String day = scan.readLine();
+            System.out.print("Masukkan deskripsi           : "); String descr = scan.readLine();
+            System.out.print("Masukkan jam  (1-24)        : "); String time = scan.readLine();
+            System.out.print("Masukkan hari (senin-minggu) : "); String day = scan.readLine();
             datas[i] = list + " |" + time + " |" + day + " |" + descr + " ";
 
         }
@@ -85,12 +87,15 @@ public class Coba {
             tmpD += "\b";
             String tmpDscr = stringToken.nextToken();
             tmpDscr += "\b";
-            System.out.println("\n1. Masukkan list yang baru");
-            System.out.println("2. Masukkan waktu yang baru");
-            System.out.println("3. Masukkan hari yang baru");
-            System.out.println("4. Masukkan deskripsi yang baru");
-            System.out.println("5. Keluar");
-            System.out.print("\n\tPilihan anda : ");
+            System.out.println("-------------------------------------------------");
+            System.out.println("|1. Masukkan list yang baru                     |");
+            System.out.println("|2. Masukkan waktu yang baru                    |");
+            System.out.println("|3. Masukkan hari yang baru                     |");
+            System.out.println("|4. Masukkan deskripsi yang baru                |");
+            System.out.println("|5. Keluar                                      |");
+            System.out.println("-------------------------------------------------");
+            System.out.print("\tPilihan anda : ");
+
             int input = Integer.parseInt(scan.readLine());
 
             switch (input) {
@@ -102,7 +107,7 @@ public class Coba {
                     break;
 
                 case 2:
-                    System.out.print("Masukkan waktu yang baru : ");
+                    System.out.print("Masukkan waktu yang baru  : ");
                     tmpT = scan.readLine();
 
                     break;
@@ -204,12 +209,15 @@ public class Coba {
             }
             Arrays.sort(datas, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
 
-            System.out.println("\n1. Tampilkan list");
-            System.out.println("2. Menambah list");
-            System.out.println("3. Update list");
-            System.out.println("4. Hapus list");
-            System.out.println("5. Lihat deskripsi list");
-            System.out.println("6. Keluar");
+            System.out.println("\n\t\t\t**********************************************");
+            System.out.println("\t\t\t*      Selamat Datang di ToDo List           *");
+            System.out.println("\t\t\t*       1. Tampilkan list                    *");
+            System.out.println("\t\t\t*       2. Menambah list                     *");
+            System.out.println("\t\t\t*       3. Update list                       *");
+            System.out.println("\t\t\t*       4. Hapus list                        *");
+            System.out.println("\t\t\t*       5. Lihat deskripsi list              *");
+            System.out.println("\t\t\t*       6. Keluar                            *");
+            System.out.println("\t\t\t**********************************************");
             System.out.print("\n\tPilihan anda : ");
             int choise = Integer.parseInt(scan.readLine());
 
