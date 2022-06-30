@@ -4,11 +4,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class Main {
+
+    static String getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        return formatter.format(date);
+    }
 
     public static int checkLastDataIsNull(String[] datas) {
 
@@ -25,15 +33,18 @@ public class Main {
 
     public static void show(String[] datas) {
 
+        System.out.println("-------------------------------------------------------------------------------");
+
         try {
             for (int i = 0; i<datas.length; i++) {
                 if (datas[i] != null) {
                     StringTokenizer stringToken = new StringTokenizer(datas[i], "|");
-                    System.out.print((i+1) + ".\t" + stringToken.nextToken());
-                    System.out.print("(pada jam : " + stringToken.nextToken() + "\b)");
-                    System.out.println(" (pada hari : " + stringToken.nextToken() + "\b)");
+                    System.out.printf("|\t%-30.30s", (i+1) + ".\t" + stringToken.nextToken());
+                    System.out.printf("|\t%10s", "(pada jam : " + stringToken.nextToken() + "\b)\t");
+                    System.out.printf("|\t%10s", "(pada hari : " + stringToken.nextToken() + "\b)\n");
                 }
             }
+            System.out.println("-------------------------------------------------------------------------------");
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -53,7 +64,8 @@ public class Main {
             System.out.print((i+1) + ".\t");
             String list = scan.readLine();
             System.out.print("Masukkan deskripsi           : "); String descr = scan.readLine();
-            System.out.print("Masukkan jam  (1-24)        : "); String time = scan.readLine();
+            descr = descr + "\t\t\t(dibuat pada : " + getDate() + ")";
+            System.out.print("Masukkan jam (1-24)        : "); String time = scan.readLine();
             System.out.print("Masukkan hari (senin-minggu) : "); String day = scan.readLine();
             datas[i] = list + " |" + time + " |" + day + " |" + descr + " ";
 
@@ -88,7 +100,7 @@ public class Main {
             String tmpDscr = stringToken.nextToken();
             tmpDscr += "\b";
             System.out.println("-------------------------------------------------");
-            System.out.println("|1. Masukkan list yang baru                     |");
+            System.out.println("|1. Masukkan judul list yang baru               |");
             System.out.println("|2. Masukkan waktu yang baru                    |");
             System.out.println("|3. Masukkan hari yang baru                     |");
             System.out.println("|4. Masukkan deskripsi yang baru                |");
@@ -101,7 +113,7 @@ public class Main {
             switch (input) {
 
                 case 1:
-                    System.out.print("Masukkan list yang baru : ");
+                    System.out.print("Masukkan judul list yang baru : ");
                     data = scan.readLine();
 
                     break;
