@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static String getDate() {
+    public static String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         return formatter.format(date);
@@ -33,7 +33,7 @@ public class Main {
 
     public static void show(String[] datas) {
 
-        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------");
 
         try {
             for (int i = 0; i<datas.length; i++) {
@@ -44,7 +44,7 @@ public class Main {
                     System.out.printf("|\t%10s", "(pada hari : " + stringToken.nextToken() + "\b)\n");
                 }
             }
-            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------");
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -56,16 +56,34 @@ public class Main {
         FileWriter writer = new FileWriter("databases.txt");
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.print("\nBerapa list yang ingin anda masukkan ? "); int j = Integer.parseInt(scan.readLine());
+        System.out.print("\nBerapa list yang ingin anda masukkan ? "); int j;
+        try {
+            j = Integer.parseInt(scan.readLine());
+        } catch (Exception e) {
+            System.err.println("Hanya boleh integer");
+            return;
+        }
         System.out.println("Masukkan judul list : ");
         show(datas);
         int check = checkLastDataIsNull(datas);
         for (int i=check; i < (j+check); i++) {
-            System.out.print((i+1) + ".\t");
+            System.out.print("\t" + (i+1) + ".\t");
             String list = scan.readLine();
             System.out.print("Masukkan deskripsi           : "); String descr = scan.readLine();
             descr = descr + "\t\t\t(dibuat pada : " + getDate() + ")";
-            System.out.print("Masukkan jam (1-24)        : "); String time = scan.readLine();
+            int time;
+            do {
+                System.out.print("Masukkan jam (0-23)          : ");
+                try {
+                    time = Integer.parseInt(scan.readLine());
+                    if (time < 0 || time > 23) {
+                        System.out.println("Salah saat memasukkan waktu");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Hanya boleh integer");
+                    return;
+                }
+            }while (time < 0 || time > 23);
             System.out.print("Masukkan hari (senin-minggu) : "); String day = scan.readLine();
             datas[i] = list + " |" + time + " |" + day + " |" + descr + " ";
 
