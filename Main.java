@@ -5,10 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
@@ -46,7 +43,7 @@ public class Main {
             }
             System.out.println("------------------------------------------------------------------------------------");
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
 
     }
@@ -56,34 +53,48 @@ public class Main {
         FileWriter writer = new FileWriter("databases.txt");
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.print("\nBerapa list yang ingin anda masukkan ? "); int j;
-        try {
-            j = Integer.parseInt(scan.readLine());
-        } catch (Exception e) {
-            System.err.println("Hanya boleh integer");
+        int j = -1;
+        boolean retry;
+        do {
+            try {
+                System.out.print("\nBerapa list yang ingin anda masukkan ? ");
+                j = Integer.parseInt(scan.readLine());
+                retry = false;
+            } catch (Exception e) {
+                System.err.println("Hanya boleh angka\n");
+                retry = true;
+            }
+        } while (retry);
+
+        if (j == -1) {
             return;
         }
+
         System.out.println("Masukkan judul list : ");
         show(datas);
         int check = checkLastDataIsNull(datas);
         for (int i=check; i < (j+check); i++) {
+
             System.out.print("\t" + (i+1) + ".\t");
             String list = scan.readLine();
             System.out.print("Masukkan deskripsi           : "); String descr = scan.readLine();
             descr = descr + "\t\t\t(dibuat pada : " + getDate() + ")";
-            int time;
+
+            int time = -1;
             do {
-                System.out.print("Masukkan jam (0-23)          : ");
                 try {
+                    System.out.print("\nMasukkan jam (0-23)          : ");
                     time = Integer.parseInt(scan.readLine());
+                    retry = false;
                     if (time < 0 || time > 23) {
-                        System.out.println("Salah saat memasukkan waktu");
+                        throw new Exception("Error");
                     }
                 } catch (Exception e) {
-                    System.err.println("Hanya boleh integer");
-                    return;
+                    System.err.println("Hanya boleh angka dan waktu jam (0-23)\n");
+                    retry = true;
                 }
-            }while (time < 0 || time > 23);
+            }while (retry);
+
             System.out.print("Masukkan hari (senin-minggu) : "); String day = scan.readLine();
             datas[i] = list + " |" + time + " |" + day + " |" + descr + " ";
 
@@ -103,8 +114,22 @@ public class Main {
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
         String yesOrNo;
 
-        System.out.print("\nPilih nomor berapa yang ingin anda ubah : ");
-        int choise = Integer.parseInt(scan.readLine());
+        int choise = -1;
+        boolean retry;
+        do {
+            try {
+                System.out.print("\nPilih nomor berapa yang ingin anda ubah : ");
+                choise  = Integer.parseInt(scan.readLine());
+                retry = false;
+            } catch (Exception e) {
+                System.err.println("\nHanya boleh angka\n");
+                retry = true;
+            }
+        }while (retry);
+
+        if (choise == -1) {
+            return;
+        }
 
         do {
 
@@ -165,7 +190,7 @@ public class Main {
             datas[choise - 1] = data + " |" + tmpT + " |" + tmpD + " |" + tmpDscr + " ";
             yesOrNo = "n";
             if (input != 5) {
-                System.out.print("\n\tLagi ? (y) ");
+                System.out.print("\n\tLagi (halaman update) ? (y) ");
                 yesOrNo = scan.readLine();
             }
         } while (yesOrNo.equalsIgnoreCase("y"));
@@ -199,7 +224,23 @@ public class Main {
         FileWriter writer = new FileWriter("databases.txt");
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.print("\nPilih nomor berapa yang ingin anda hapus : "); int choise = Integer.parseInt(scan.readLine());
+        boolean retry;
+        int choise = -1;
+        do {
+            try {
+                System.out.print("\nPilih nomor berapa yang ingin anda hapus : ");
+                choise = Integer.parseInt(scan.readLine());
+                retry = false;
+            } catch (Exception e) {
+                System.err.println("Harus angka\n");
+                retry = true;
+            }
+        } while (retry);
+
+        if (choise == -1) {
+            return;
+        }
+
         datas[choise-1] = null;
         Arrays.sort(datas, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
         for (String list : datas) {
@@ -296,7 +337,7 @@ public class Main {
 
             yesOrNo = "n";
             if (choise != 6) {
-                System.out.print("\n\tLagi ? (y) ");
+                System.out.print("\n\tLagi (halaman utama) ? (y) ");
                 yesOrNo = scan.readLine();
             }
         } while (yesOrNo.equalsIgnoreCase("y"));
