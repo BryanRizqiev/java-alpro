@@ -5,7 +5,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 public class Main {
 
@@ -125,7 +128,7 @@ public class Main {
                 System.err.println("\nHanya boleh angka\n");
                 retry = true;
             }
-        }while (retry);
+        } while (retry);
 
         if (choise == -1) {
             return;
@@ -185,14 +188,17 @@ public class Main {
 
                 default:
                     System.out.print("\nInputan tidak diketahui");
+
             }
 
             datas[choise - 1] = data + " |" + tmpT + " |" + tmpD + " |" + tmpDscr + " ";
             yesOrNo = "n";
+
             if (input != 5) {
                 System.out.print("\n\tLagi (halaman update) ? (y) ");
                 yesOrNo = scan.readLine();
             }
+
         } while (yesOrNo.equalsIgnoreCase("y"));
 
         for (String list : datas) {
@@ -333,6 +339,7 @@ public class Main {
 
                 default:
                     System.out.print("\nInputan tidak diketahui");
+
             }
 
             yesOrNo = "n";
@@ -340,6 +347,7 @@ public class Main {
                 System.out.print("\n\tLagi (halaman utama) ? (y) ");
                 yesOrNo = scan.readLine();
             }
+
         } while (yesOrNo.equalsIgnoreCase("y"));
     }
 }
